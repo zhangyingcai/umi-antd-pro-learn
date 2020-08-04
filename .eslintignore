@@ -1,0 +1,8 @@
+/lambda/
+/scripts
+/config
+.history
+.eslintrc.js
+.prettierrc.js
+.stylelintrc.js
+/config
