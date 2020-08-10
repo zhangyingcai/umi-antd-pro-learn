@@ -55,3 +55,14 @@ npm test
 ## More
 
 You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+
+## 提交时报错
+
+.eslintignore 中过滤
+
+```
+.eslintrc.js
+.prettierrc.js
+.stylelintrc.js
+/config
+```

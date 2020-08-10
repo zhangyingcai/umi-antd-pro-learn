@@ -117,6 +117,12 @@ export default defineConfig({
                   path: '/form/advanced-form',
                   component: './form/advanced-form',
                 },
+                {
+                  name: 'owner-form',
+                  icon: 'smile',
+                  path: '/form/number-form',
+                  component: './form/number-form',
+                },
               ],
             },
             {
@@ -277,6 +283,19 @@ export default defineConfig({
                   icon: 'smile',
                   path: '/editor/koni',
                   component: './editor/koni',
+                },
+              ],
+            },
+            {
+              name: 'owner',
+              icon: 'highlight',
+              path: '/owner',
+              routes: [
+                {
+                  name: 'imgpreview',
+                  icon: 'smile',
+                  path: '/owner/imgpreview',
+                  component: './owner/img-preview',
                 },
               ],
             },
