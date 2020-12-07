@@ -300,6 +300,55 @@ export default defineConfig({
               ],
             },
             {
+              name: 'hooks',
+              icon: 'highlight',
+              path: '/useeffect',
+              routes: [
+                {
+                  name: 'useDocumentTitle',
+                  icon: 'smile',
+                  path: '/useeffect/useDocumentTitle',
+                  component: './useeffect/useDocumentTitle',
+                },
+                {
+                  name: 'hooks',
+                  icon: 'smile',
+                  path: '/useeffect/useCallback',
+                  component: './useeffect/useCallback',
+                },
+                {
+                  name: 'willmounted',
+                  icon: 'smile',
+                  path: '/useeffect/useCallback/willmounted',
+                  component: './useeffect/useCallback/willmounted',
+                },
+                {
+                  name: 'useContext',
+                  icon: 'smile',
+                  path: '/useeffect/useCallback/useContext',
+                  component: './useeffect/useCallback/useContext',
+                },
+                {
+                  name: 'useReducer',
+                  icon: 'smile',
+                  path: '/useeffect/useCallback/useReducer',
+                  component: './useeffect/useCallback/useReducer',
+                },
+                {
+                  name: 'useEffect',
+                  icon: 'smile',
+                  path: '/useeffect/useCallback/useEffect',
+                  component: './useeffect/useCallback/useEffect',
+                },
+                {
+                  name: 'useLayoutEffect',
+                  icon: 'smile',
+                  path: '/useeffect/useCallback/list',
+                  component: './useeffect/useCallback/list',
+                },
+              ],
+            },
+            {
               component: '404',
             },
           ],
