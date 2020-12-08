@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useState, useRef } from 'react';
 import { Input, Button } from 'antd';
 
 const Item = ({ item, onDele }) => {
@@ -54,6 +54,99 @@ const reducer1 = (state, action) => {
     default:
       throw new Error();
   }
+};
+
+// 实现一个计时器
+// interface Action {
+//     type: 'start' | 'stop' | 'reset' | undefined,
+//     playload?: {
+//         startTime?: number // seconend
+//     }
+// }
+// interface State {
+//     timerId: number | undefined,
+//     second: number,
+//     string: String,
+// }
+// 计时器 localstring
+const twoChar = (n: number) => `${n || 0}`.padStart(2, '0');
+// 秒 to Date
+const secondToDate = (sec: number) => {
+  const letSec = sec || 0;
+  const h = parseInt(String(letSec / (60 * 60)), 10);
+  const m = parseInt(String((letSec % (60 * 60)) / 60), 10);
+  const s = parseInt(String((letSec % (60 * 60)) % 60), 10);
+  return { h, m, s, string: `${twoChar(h)}:${twoChar(m)}:${twoChar(s)}` };
+};
+
+const timerState = { second: 0, string: '00:00:00' };
+
+const TimerCounter = () => {
+  const [time, setTime] = useState(timerState);
+  const timerRef = useRef();
+  // 停止计时器
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  }, [timerRef.current]);
+  // 开启计时器
+  const startTimer = () => {
+    stopTimer();
+    timerRef.current = setInterval(function () {
+      setTime(({ second = 0 }) => {
+        const { string } = secondToDate(second + 1);
+        return {
+          second: second + 1,
+          string,
+        };
+      });
+    }, 1000);
+  };
+
+  const resetAction = () => {
+    stopTimer();
+    setTime(timerState);
+  };
+
+  // const reducer = (state: State, action: Action) => {
+
+  //     const { type, playload = {} } = action;
+  //     const { startTime = 0 } = playload;
+
+  //     switch (type) {
+  //         case 'start':
+  //             if (startTime) {
+  //                 setTime({ ...time, second: startTime });
+  //             }
+  //             startTimer();
+  //             break;
+  //         case 'stop':
+  //             stopTimer();
+  //             break;
+  //         case 'reset':
+  //             setTime(timerState);
+  //             startTimer();
+  //             break;
+  //         default:
+  //             throw TypeError("should has a type 'start' | 'stop' | 'reset'")
+  //     }
+
+  // }
+  return (
+    <div>
+      <span>{time.string}</span>
+      <button type="button" onClick={resetAction}>
+        reset
+      </button>
+      <button type="button" onClick={stopTimer}>
+        stop
+      </button>
+      <button type="button" onClick={startTimer}>
+        start
+      </button>
+    </div>
+  );
 };
 
 const Counter = () => {
@@ -114,6 +207,9 @@ const Page = () => {
         onDele={(val) => dispatch({ type: 'del', val })}
       />
       <Counter />
+      <h1>计时器</h1>
+      <TimerCounter />
+      <TimerCounter />
     </div>
   );
 };
