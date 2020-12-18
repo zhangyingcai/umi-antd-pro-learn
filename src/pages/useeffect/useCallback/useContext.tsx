@@ -12,14 +12,19 @@ const themes = {
     background: '#222222',
   },
 };
-//  默认 light
-const myContext = React.createContext(themes.light);
+
+const test = {
+  string: 'test',
+};
+//  默认 dark
+const MyContext = React.createContext(themes.dark);
+const TestContext = React.createContext(test);
 
 const Child = () => {
   useEffect(() => {
     console.log('child 被渲染了');
   });
-  const { foreground, background } = useContext(myContext) || {};
+  const { foreground, background } = useContext(MyContext) || {};
   return <div style={{ background, color: foreground }}>child</div>;
 };
 
@@ -27,18 +32,22 @@ const UseContextFn = () => {
   useEffect(() => {
     console.log('useContextFn 被渲染了');
   });
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(null);
   // 主题切换
 
   return (
-    <myContext.Provider value={themes[theme || 'light']}>
-      <Child />
-      <Select value={theme} onChange={(val) => setTheme(val || 'light')}>
-        {Object.keys(themes).map((item) => (
-          <Option value={item}>{item}</Option>
-        ))}
-      </Select>
-    </myContext.Provider>
+    <React.Fragment>
+      <TestContext.Provider value={test}>
+        {/* <MyContext.Provider value={undefined}> */}
+        <Child />
+        <Select value={theme} onChange={(val) => setTheme(val || 'light')}>
+          {Object.keys(themes).map((item) => (
+            <Option value={item}>{item}</Option>
+          ))}
+        </Select>
+        {/* </MyContext.Provider> */}
+      </TestContext.Provider>
+    </React.Fragment>
   );
 };
 
@@ -48,5 +57,7 @@ const UseContextFn = () => {
 
 // Provider 接收一个 value 属性，传递给消费组件。一个 Provider 可以和多个消费组件有对应关系。
 // 多个 Provider 也可以嵌套使用，里层的会覆盖外层的数据。
+
+// ToDo context 的问题
 
 export default UseContextFn;

@@ -5,39 +5,38 @@ import { Button } from 'antd';
 //  useState 实现
 
 const memoizedState: any[] = [];
-let memocount = 0; // 下标
+let memoCount = 0; // 下标
 
 function useState(initialValue) {
   // 获取缓存的值
-  const state = memoizedState[memocount] || initialValue;
-  const currentmemocount = memocount;
+  const state = memoizedState[memoCount] || initialValue;
+  const currentmemocount = memoCount;
   function setState(newState) {
-    // console.log(currentmemocount, '新数据', memoizedState )
+    // 缓存改变的值
     memoizedState[currentmemocount] = newState;
     render(); // 模拟 reRender，这一行不需要关心
   }
   // 每次执行 下标加一
-  memocount += 1;
+  memoCount += 1;
   return [state, setState];
 }
 
 // useEffect
-const memoizedEffect = [];
-let effectcount = 0; // 下标
 const useEffect = (callback, deps) => {
+  //  deps 没有
   const hasnoDeps = !deps;
-  // callback 运行条件 deps没有参数时每次都运行， deps有参数时参数改变才运行
   // 获取缓存的值
-  const depsArray = memoizedEffect[effectcount];
-  // depsArray
+  const depsArray = memoizedEffect[memoCount];
+  // deps有参数时参数改变才运行
   const depsChange = depsArray
     ? Array.isArray(deps) && !deps.every((item, index) => item === depsArray[index])
     : true;
   if (hasnoDeps || depsChange) {
     callback();
-    memoizedEffect[effectcount] = deps;
+    // 参数列表改变时缓存列表
+    memoizedState[memoCount] = deps;
   }
-  effectcount += 1;
+  memoCount += 1;
 };
 
 function App() {
@@ -86,8 +85,7 @@ function App() {
 const rootElement = document.getElementById('root');
 
 function render() {
-  memocount = 0;
-  effectcount = 0;
+  memoCount = 0;
   ReactDOM.render(<App />, rootElement);
 }
 render();
